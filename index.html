@@ -75,7 +75,12 @@
                 <h1 class="text-2xl font-bold tracking-tight text-white">Financial Dashboard</h1>
                 <p class="text-slate-400 text-sm mt-1">Real-time valuation of your stock investments, capital deployment, and transactional flows.</p>
             </div>
-            <div>
+            <div class="flex flex-wrap items-center gap-3">
+                <!-- Request Deposit Hyperlink Button -->
+                <button onclick="openModal('requestDepositModal')" class="inline-flex items-center space-x-2 bg-emerald-600 hover:bg-emerald-500 text-white px-5 py-2.5 rounded-xl text-sm font-semibold transition-all shadow-lg shadow-emerald-600/20 active:scale-95">
+                    <i class="fa-solid fa-arrow-down-to-bracket"></i>
+                    <span>Request Deposit</span>
+                </button>
                 <!-- Biniyog Box Portfolio & Reports hyperlink button -->
                 <button onclick="openModal('reportsModal')" class="inline-flex items-center space-x-2 bg-cyan-600 hover:bg-cyan-500 text-white px-5 py-2.5 rounded-xl text-sm font-semibold transition-all shadow-lg shadow-cyan-600/20 active:scale-95">
                     <i class="fa-solid fa-file-invoice-dollar"></i>
@@ -250,6 +255,29 @@
 
     <!-- MODALS CONTAINER -->
 
+    <!-- Request Deposit Modal -->
+    <div id="requestDepositModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm hidden">
+        <div class="bg-finance-card border border-finance-border w-full max-w-md rounded-2xl p-6 shadow-2xl relative">
+            <button onclick="closeModal('requestDepositModal')" class="absolute top-4 right-4 text-slate-400 hover:text-white text-sm"><i class="fa-solid fa-xmark"></i></button>
+            <h3 class="text-lg font-bold text-white mb-2 flex items-center gap-2"><i class="fa-solid fa-arrow-down-to-bracket text-emerald-400"></i> Request Fund Deposit</h3>
+            <p class="text-xs text-slate-400 mb-4">Add capital to your cash balance and total portfolio.</p>
+            <div class="space-y-4 text-xs">
+                <div>
+                    <label class="block text-slate-400 mb-1 font-medium">Deposit Amount ($)</label>
+                    <input type="number" id="depositInputAmount" placeholder="0.00" class="w-full bg-slate-900 border border-finance-border rounded-xl px-3.5 py-2.5 text-white focus:outline-none focus:border-emerald-500">
+                </div>
+                <div>
+                    <label class="block text-slate-400 mb-1 font-medium">Funding Source / Bank</label>
+                    <input type="text" placeholder="Enter bank account or card number" class="w-full bg-slate-900 border border-finance-border rounded-xl px-3.5 py-2.5 text-white focus:outline-none focus:border-emerald-500">
+                </div>
+            </div>
+            <div class="mt-6 flex justify-end space-x-3">
+                <button onclick="closeModal('requestDepositModal')" class="bg-finance-border hover:bg-slate-700 text-slate-200 text-xs font-semibold px-4 py-2 rounded-lg">Cancel</button>
+                <button onclick="submitDepositRequest()" class="bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-semibold px-4 py-2 rounded-lg shadow-md">Submit Deposit</button>
+            </div>
+        </div>
+    </div>
+
     <!-- Reports Modal ("Biniyog Box Portfolio & Reports") -->
     <div id="reportsModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm hidden">
         <div class="bg-finance-card border border-finance-border w-full max-w-lg rounded-2xl p-6 shadow-2xl relative">
@@ -284,8 +312,8 @@
             <p class="text-xs text-slate-400 mb-4">Latest releases and market announcement logs.</p>
             <div class="space-y-3 text-xs text-slate-300">
                 <div class="p-3 rounded-lg bg-slate-900/60 border border-slate-800">
-                    <span class="text-cyan-400 font-semibold block mb-1">v2.4.0 Release - Minimalist Redesign</span>
-                    <p class="text-slate-400">Streamlined modular controls, instant page reload integration, and real-time balance calculations.</p>
+                    <span class="text-cyan-400 font-semibold block mb-1">v2.5.0 Release - Deposit Module Added</span>
+                    <p class="text-slate-400">Added Request Deposit hyperlink and modal controls for streamlined capital injection.</p>
                 </div>
             </div>
             <div class="mt-6 flex justify-end">
@@ -300,7 +328,7 @@
             <button onclick="closeModal('cashDetailsModal')" class="absolute top-4 right-4 text-slate-400 hover:text-white text-sm"><i class="fa-solid fa-xmark"></i></button>
             <h3 class="text-lg font-bold text-white mb-2 flex items-center gap-2"><i class="fa-solid fa-money-bill-wave text-emerald-400"></i> Cash Balance Breakdown</h3>
             <p class="text-xs text-slate-400 mb-4">Detailed history of liquid reserves.</p>
-            <div class="bg-slate-900/50 p-4 rounded-xl border border-slate-800 text-xs text-center py-8 text-slate-400">
+            <div id="cashDetailsContent" class="bg-slate-900/50 p-4 rounded-xl border border-slate-800 text-xs text-center py-8 text-slate-400">
                 No cash transactions recorded yet. Balance is $0.00.
             </div>
             <div class="mt-6 flex justify-end">
@@ -360,7 +388,7 @@
             <button onclick="closeModal('withdrawalDetailsModal')" class="absolute top-4 right-4 text-slate-400 hover:text-white text-sm"><i class="fa-solid fa-xmark"></i></button>
             <h3 class="text-lg font-bold text-white mb-2 flex items-center gap-2"><i class="fa-solid fa-arrow-up-long text-rose-400"></i> Withdrawal Payout Records</h3>
             <p class="text-xs text-slate-400 mb-4">History of past withdrawal requests.</p>
-            <div class="bg-slate-900/50 p-4 rounded-xl border border-slate-800 text-xs text-center py-8 text-slate-400">
+            <div id="withdrawalDetailsContent" class="bg-slate-900/50 p-4 rounded-xl border border-slate-800 text-xs text-center py-8 text-slate-400">
                 No withdrawal history found. Total is $0.00.
             </div>
             <div class="mt-6 flex justify-end">
@@ -429,7 +457,9 @@
             sharesBalance: 0.00,
             incomeBalance: 0.00,
             investmentBalance: 0.00,
-            withdrawalBalance: 0.00
+            withdrawalBalance: 0.00,
+            depositsHistory: [],
+            withdrawalsHistory: []
         };
 
         // Format currency helper
@@ -448,6 +478,28 @@
             
             const reportTotal = document.getElementById('modalReportTotal');
             if(reportTotal) reportTotal.innerText = formatCurrency(state.totalBalance);
+
+            // Update Cash Details breakdown if deposits exist
+            const cashDetailsEl = document.getElementById('cashDetailsContent');
+            if (state.depositsHistory.length > 0) {
+                cashDetailsEl.innerHTML = state.depositsHistory.map(d => `
+                    <div class="flex justify-between py-2 border-b border-slate-800 text-left">
+                        <span class="text-emerald-400 font-medium">+${formatCurrency(d.amount)}</span>
+                        <span class="text-slate-400">${d.date}</span>
+                    </div>
+                `).join('');
+            }
+
+            // Update Withdrawal Details breakdown if withdrawals exist
+            const withdrawalDetailsEl = document.getElementById('withdrawalDetailsContent');
+            if (state.withdrawalsHistory.length > 0) {
+                withdrawalDetailsEl.innerHTML = state.withdrawalsHistory.map(w => `
+                    <div class="flex justify-between py-2 border-b border-slate-800 text-left">
+                        <span class="text-rose-400 font-medium">-${formatCurrency(w.amount)}</span>
+                        <span class="text-slate-400">${w.date}</span>
+                    </div>
+                `).join('');
+            }
         }
 
         // Modal Controllers
@@ -466,15 +518,44 @@
             window.location.reload();
         }
 
+        // Handle deposit request submission
+        function submitDepositRequest() {
+            const inputVal = parseFloat(document.getElementById('depositInputAmount').value);
+            if (!isNaN(inputVal) && inputVal > 0) {
+                state.cashBalance += inputVal;
+                state.totalBalance += inputVal;
+                state.depositsHistory.push({
+                    amount: inputVal,
+                    date: new Date().toLocaleDateString()
+                });
+                updateUI();
+                document.getElementById('depositInputAmount').value = '';
+                closeModal('requestDepositModal');
+                alert('Deposit request successfully processed and added to cash balance.');
+            } else {
+                alert('Please enter a valid positive deposit amount.');
+            }
+        }
+
         // Handle withdrawal request submission
         function submitWithdrawalRequest() {
             const inputVal = parseFloat(document.getElementById('withdrawalInputAmount').value);
             if (!isNaN(inputVal) && inputVal > 0) {
-                state.withdrawalBalance += inputVal;
-                updateUI();
-                document.getElementById('withdrawalInputAmount').value = '';
-                closeModal('requestWithdrawalModal');
-                alert('Withdrawal request successfully logged.');
+                if (inputVal <= state.cashBalance) {
+                    state.cashBalance -= inputVal;
+                    state.totalBalance -= inputVal;
+                    state.withdrawalBalance += inputVal;
+                    state.withdrawalsHistory.push({
+                        amount: inputVal,
+                        date: new Date().toLocaleDateString()
+                    });
+                    updateUI();
+                    document.getElementById('withdrawalInputAmount').value = '';
+                    closeModal('requestWithdrawalModal');
+                    alert('Withdrawal request successfully logged.');
+                } else {
+                    alert('Withdrawal amount exceeds available cash balance.');
+                }
             } else {
                 alert('Please enter a valid positive amount.');
             }
