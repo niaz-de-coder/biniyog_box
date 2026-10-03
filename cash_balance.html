@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cash Balance Details - Niaz Empirez Asset Management</title>
+
+  <!-- Google Fonts: Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Bootstrap 5 CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+          },
+          colors: {
+            brand: {
+              dark: '#070A11',
+              card: '#0F172A',
+              cardLight: '#1E293B',
+              accent: '#38BDF8',
+              emerald: '#10B981',
+              rose: '#F43F5E',
+              amber: '#F59E0B'
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Custom Glassmorphism Styles -->
+  <style>
+    body {
+      background-color: #070a11;
+      color: #f1f5f9;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      overflow-x: hidden;
+    }
+
+    .glass-nav {
+      background: rgba(7, 10, 17, 0.85);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .glass-card {
+      background: rgba(15, 23, 42, 0.75);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.5);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .glass-card:hover {
+      border-color: rgba(56, 189, 248, 0.25);
+      transform: translateY(-2px);
+    }
+
+    .glow-bg {
+      position: absolute;
+      width: 450px;
+      height: 450px;
+      background: radial-gradient(circle, rgba(16, 185, 129, 0.12) 0%, rgba(0, 0, 0, 0) 70%);
+      top: -120px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    /* Skeleton Loading Effect */
+    .skeleton {
+      background: linear-gradient(90deg, #1e293b 25%, #334155 50%, #1e293b 75%);
+      background-size: 200% 100%;
+      animation: skeleton-loading 1.5s infinite;
+      border-radius: 6px;
+      display: inline-block;
+    }
+
+    @keyframes skeleton-loading {
+      0% { background-position: 200% 0; }
+      100% { background-position: -200% 0; }
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between relative selection:bg-emerald-500 selection:text-white">
+
+  <!-- Ambient Glow Background -->
+  <div class="glow-bg"></div>
+
+  <!-- HEADER SECTION (Fixed on Top) -->
+  <header class="fixed top-0 left-0 right-0 z-40 glass-nav">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+      
+      <!-- Top Left: Back Button & Title -->
+      <div class="flex items-center space-x-3 sm:space-x-4">
+        <a href="index.html" class="inline-flex items-center gap-2 px-3 py-2 rounded-xl bg-slate-800/80 hover:bg-slate-700 text-slate-200 hover:text-white text-xs sm:text-sm font-semibold border border-slate-700/60 transition-all shadow-sm">
+          <i class="fa-solid fa-arrow-left text-xs"></i>
+          <span class="hidden sm:inline">Back to Dashboard</span>
+          <span class="sm:hidden">Back</span>
+        </a>
+
+        <div class="h-6 w-px bg-slate-800"></div>
+
+        <h1 class="text-sm sm:text-lg font-bold text-white m-0 tracking-tight flex items-center gap-2">
+          <i class="fa-solid fa-wallet text-emerald-400"></i>
+          <span>Cash Balance Breakdown</span>
+        </h1>
+      </div>
+
+      <!-- Top Right: Refresh Button -->
+      <div>
+        <button onclick="window.location.reload();" class="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-slate-800/90 hover:bg-slate-700 text-sky-400 hover:text-sky-300 text-xs sm:text-sm font-semibold border border-slate-700/60 transition-all shadow-sm cursor-pointer">
+          <i class="fa-solid fa-arrows-rotate text-xs"></i>
+          <span>Refresh</span>
+        </button>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- MAIN CONTENT CONTAINER -->
+  <main class="pt-28 pb-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full space-y-8 z-10">
+
+    <!-- MAIN SECTION: Cash Balance (Cell B2) -->
+    <section id="section-cash-hero" class="w-full">
+      <div class="glass-card rounded-2xl p-6 sm:p-10 relative overflow-hidden border-emerald-500/30">
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-6">
+          <div class="space-y-2">
+            <div class="flex items-center gap-2 text-emerald-400 text-xs sm:text-sm font-semibold tracking-wider uppercase">
+              <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
+              Liquid Fund Reserve
+            </div>
+            <h2 class="text-slate-400 font-medium text-base sm:text-lg m-0">Total Available Cash Balance</h2>
+            <div class="text-3xl sm:text-5xl lg:text-6xl font-extrabold text-white tracking-tight flex items-center gap-3">
+              <span id="cash-balance" class="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-teal-300 to-white">
+                <span class="skeleton w-52 h-12"></span>
+              </span>
+            </div>
+          </div>
+
+          <div class="flex items-center gap-3 bg-slate-900/80 p-4 rounded-xl border border-slate-800 self-start md:self-auto">
+            <div class="w-12 h-12 rounded-lg bg-emerald-500/10 text-emerald-400 flex items-center justify-center text-xl">
+              <i class="fa-solid fa-money-bill-trend-up"></i>
+            </div>
+            <div>
+              <p class="text-xs text-slate-400 font-medium m-0">Cell Reference</p>
+              <p class="text-sm font-semibold text-slate-200 m-0">Sheet: "balance" (B2)</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- SECTION 2: Invested Balance & Withdraw Balance (Cells D2 & E2) -->
+    <section id="section-invest-withdraw" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <!-- Invested Balance (D2) -->
+      <div class="glass-card rounded-2xl p-6 flex flex-col justify-between space-y-4">
+        <div class="flex items-start justify-between">
+          <div class="space-y-1">
+            <span class="text-xs font-semibold uppercase tracking-wider text-sky-400">Total Capital Inflow</span>
+            <h3 class="text-lg font-bold text-white m-0">Invested Balance</h3>
+          </div>
+          <div class="w-10 h-10 rounded-lg bg-sky-500/10 text-sky-400 flex items-center justify-center text-lg">
+            <i class="fa-solid fa-arrow-down-left"></i>
+          </div>
+        </div>
+
+        <div class="text-2xl sm:text-4xl font-bold text-white">
+          <span id="invested-balance"><span class="skeleton w-36 h-9"></span></span>
+        </div>
+
+        <div class="pt-3 border-t border-slate-800/80 flex items-center justify-between text-xs text-slate-400">
+          <span>Total Principal Injected</span>
+          <span class="text-slate-300 font-mono">Cell D2</span>
+        </div>
+      </div>
+
+      <!-- Withdraw Balance (E2) -->
+      <div class="glass-card rounded-2xl p-6 flex flex-col justify-between space-y-4">
+        <div class="flex items-start justify-between">
+          <div class="space-y-1">
+            <span class="text-xs font-semibold uppercase tracking-wider text-amber-400">Total Capital Outflow</span>
+            <h3 class="text-lg font-bold text-white m-0">Withdraw Balance</h3>
+          </div>
+          <div class="w-10 h-10 rounded-lg bg-amber-500/10 text-amber-400 flex items-center justify-center text-lg">
+            <i class="fa-solid fa-arrow-up-right"></i>
+          </div>
+        </div>
+
+        <div class="text-2xl sm:text-4xl font-bold text-white">
+          <span id="withdraw-balance"><span class="skeleton w-36 h-9"></span></span>
+        </div>
+
+        <div class="pt-3 border-t border-slate-800/80 flex items-center justify-between text-xs text-slate-400">
+          <span>Total Capital Withdrawn</span>
+          <span class="text-slate-300 font-mono">Cell E2</span>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- SECTION 3: Total Share Buying & Selling Amounts (Cells F2 & G2) -->
+    <section id="section-share-trades" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <!-- Total Share Buying Amount (F2) -->
+      <div class="glass-card rounded-2xl p-6 flex flex-col justify-between space-y-4">
+        <div class="flex items-start justify-between">
+          <div class="space-y-1">
+            <span class="text-xs font-semibold uppercase tracking-wider text-indigo-400">Equity Purchases</span>
+            <h3 class="text-lg font-bold text-white m-0">Total Share Buying Amount</h3>
+          </div>
+          <div class="w-10 h-10 rounded-lg bg-indigo-500/10 text-indigo-400 flex items-center justify-center text-lg">
+            <i class="fa-solid fa-cart-shopping"></i>
+          </div>
+        </div>
+
+        <div class="text-2xl sm:text-4xl font-bold text-white">
+          <span id="buying-amount"><span class="skeleton w-36 h-9"></span></span>
+        </div>
+
+        <div class="pt-3 border-t border-slate-800/80 flex items-center justify-between text-xs text-slate-400">
+          <span>Total Capital Used to Buy Shares</span>
+          <span class="text-slate-300 font-mono">Cell F2</span>
+        </div>
+      </div>
+
+      <!-- Total Share Selling Amount (G2) -->
+      <div class="glass-card rounded-2xl p-6 flex flex-col justify-between space-y-4">
+        <div class="flex items-start justify-between">
+          <div class="space-y-1">
+            <span class="text-xs font-semibold uppercase tracking-wider text-emerald-400">Equity Liquidation</span>
+            <h3 class="text-lg font-bold text-white m-0">Total Share Selling Amount</h3>
+          </div>
+          <div class="w-10 h-10 rounded-lg bg-emerald-500/10 text-emerald-400 flex items-center justify-center text-lg">
+            <i class="fa-solid fa-hand-holding-dollar"></i>
+          </div>
+        </div>
+
+        <div class="text-2xl sm:text-4xl font-bold text-white">
+          <span id="selling-amount"><span class="skeleton w-36 h-9"></span></span>
+        </div>
+
+        <div class="pt-3 border-t border-slate-800/80 flex items-center justify-between text-xs text-slate-400">
+          <span>Total Proceeds Received from Sales</span>
+          <span class="text-slate-300 font-mono">Cell G2</span>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- SECTION 4 & 5: Dividend Amount & Expense Balance (Cells H2 & I2) -->
+    <section id="section-dividends-expenses" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <!-- Dividend Amount (H2) -->
+      <div class="glass-card rounded-2xl p-6 flex flex-col justify-between space-y-4">
+        <div class="flex items-start justify-between">
+          <div class="space-y-1">
+            <span class="text-xs font-semibold uppercase tracking-wider text-emerald-400">Passive Earnings</span>
+            <h3 class="text-lg font-bold text-white m-0">Dividend Amount</h3>
+          </div>
+          <div class="w-10 h-10 rounded-lg bg-emerald-500/10 text-emerald-400 flex items-center justify-center text-lg">
+            <i class="fa-solid fa-coins"></i>
+          </div>
+        </div>
+
+        <div class="text-2xl sm:text-4xl font-bold text-white">
+          <span id="dividend-amount"><span class="skeleton w-36 h-9"></span></span>
+        </div>
+
+        <div class="pt-3 border-t border-slate-800/80 flex items-center justify-between text-xs text-slate-400">
+          <span>Accumulated Dividend Payouts</span>
+          <span class="text-slate-300 font-mono">Cell H2</span>
+        </div>
+      </div>
+
+      <!-- Expense Balance (I2) -->
+      <div class="glass-card rounded-2xl p-6 flex flex-col justify-between space-y-4">
+        <div class="flex items-start justify-between">
+          <div class="space-y-1">
+            <span class="text-xs font-semibold uppercase tracking-wider text-rose-400">System Fees & Costs</span>
+            <h3 class="text-lg font-bold text-white m-0">Expense Balance</h3>
+          </div>
+          <div class="w-10 h-10 rounded-lg bg-rose-500/10 text-rose-400 flex items-center justify-center text-lg">
+            <i class="fa-solid fa-file-invoice-dollar"></i>
+          </div>
+        </div>
+
+        <div class="text-2xl sm:text-4xl font-bold text-white">
+          <span id="expense-balance"><span class="skeleton w-36 h-9"></span></span>
+        </div>
+
+        <div class="pt-3 border-t border-slate-800/80 flex items-center justify-between text-xs text-slate-400">
+          <span>Brokerage Fees & Operational Costs</span>
+          <span class="text-slate-300 font-mono">Cell I2</span>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+
+  <!-- ERROR MODAL OVERLAY (Triggers on Fetch Failure) -->
+  <div id="error-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-md hidden p-4">
+    <div class="glass-card max-w-md w-full p-6 sm:p-8 rounded-2xl border-rose-500/40 text-center space-y-5 shadow-2xl">
+      <div class="w-16 h-16 rounded-2xl bg-rose-500/10 text-rose-500 border border-rose-500/20 mx-auto flex items-center justify-center text-3xl">
+        <i class="fa-solid fa-triangle-exclamation"></i>
+      </div>
+      
+      <div class="space-y-2">
+        <h3 class="text-xl font-bold text-white m-0">Cash Ledger Fetch Failed</h3>
+        <p id="error-message-text" class="text-sm text-slate-300 leading-relaxed m-0">
+          Unable to fetch cash balance metrics from Google Sheet. Please check your connection.
+        </p>
+      </div>
+
+      <div class="pt-2">
+        <button onclick="window.location.reload();" 
+                class="w-full py-3 rounded-xl bg-rose-600 hover:bg-rose-500 text-white font-bold text-sm tracking-wide shadow-lg shadow-rose-600/30 transition-all cursor-pointer">
+          Okay (Refresh Page)
+        </button>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- FOOTER SECTION -->
+  <footer class="border-t border-slate-800/80 bg-slate-950/80 text-slate-400 pt-10 pb-8 px-4 sm:px-6 lg:px-8 z-10">
+    <div class="max-w-7xl mx-auto space-y-6">
+      <div class="flex flex-col sm:flex-row justify-between items-center gap-4 text-xs">
+        <div class="flex items-center space-x-2">
+          <div class="w-6 h-6 rounded-md bg-emerald-500 text-white font-bold flex items-center justify-center text-xs">
+            N
+          </div>
+          <span class="text-white font-bold">Niaz Empirez Asset Management</span>
+        </div>
+        <p class="m-0 text-slate-500">&copy; <span id="year"></span> Niaz Empirez. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+
+  <!-- JAVASCRIPT: Google Sheet Fetcher for Cash Balance Ledger -->
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    const SPREADSHEET_ID = '1xeMJjLxS79lqQEsnvfLycx2voNv7rToF0wm6J3S4_Fs';
+    const SHEET_NAME = 'balance';
+
+    // Currency Formatter
+    function formatCurrency(val) {
+      if (val === null || val === undefined || isNaN(val)) return '৳ 0.00';
+      const num = parseFloat(val);
+      return '৳ ' + num.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    }
+
+    // Trigger Error Modal
+    function showErrorModal(message) {
+      if (message) {
+        document.getElementById('error-message-text').textContent = message;
+      }
+      document.getElementById('error-modal').classList.remove('hidden');
+    }
+
+    // Main Live Sheet Fetcher
+    async function fetchCashBalanceData() {
+      const gvizUrl = `https://docs.google.com/spreadsheets/d/${SPREADSHEET_ID}/gviz/tq?tqx=out:json&sheet=${SHEET_NAME}`;
+
+      try {
+        const response = await fetch(gvizUrl);
+        if (!response.ok) {
+          throw new Error(`HTTP Error! Status: ${response.status}`);
+        }
+
+        const text = await response.text();
+        
+        const jsonStart = text.indexOf('{');
+        const jsonEnd = text.lastIndexOf('}');
+        if (jsonStart === -1 || jsonEnd === -1) {
+          throw new Error('Failed to parse response structure from Google Sheet.');
+        }
+
+        const data = JSON.parse(text.substring(jsonStart, jsonEnd + 1));
+
+        if (!data.table || !data.table.rows || data.table.rows.length === 0) {
+          throw new Error('No records found in "balance" sheet.');
+        }
+
+        const row = data.table.rows[0].c;
+        const getVal = (cell) => (cell && (cell.v !== null && cell.v !== undefined) ? cell.v : (cell && cell.f ? cell.f : 0));
+
+        // Column Mappings:
+        // Cell B2 -> index 1 (Cash Balance)
+        // Cell D2 -> index 3 (Invested / Investment)
+        // Cell E2 -> index 4 (Withdraw Balance)
+        // Cell F2 -> index 5 (Total Share Buying Amount)
+        // Cell G2 -> index 6 (Total Share Selling Amount)
+        // Cell H2 -> index 7 (Dividend Amount)
+        // Cell I2 -> index 8 (Expense Balance)
+
+        const cashBalance = getVal(row[1]);
+        const investedBalance = getVal(row[3]);
+        const withdrawBalance = getVal(row[4]);
+        const buyingAmount = getVal(row[5]);
+        const sellingAmount = getVal(row[6]);
+        const dividendAmount = getVal(row[7]);
+        const expenseBalance = getVal(row[8]);
+
+        // Render Values
+        document.getElementById('cash-balance').textContent = formatCurrency(cashBalance);
+        document.getElementById('invested-balance').textContent = formatCurrency(investedBalance);
+        document.getElementById('withdraw-balance').textContent = formatCurrency(withdrawBalance);
+        document.getElementById('buying-amount').textContent = formatCurrency(buyingAmount);
+        document.getElementById('selling-amount').textContent = formatCurrency(sellingAmount);
+        document.getElementById('dividend-amount').textContent = formatCurrency(dividendAmount);
+        document.getElementById('expense-balance').textContent = formatCurrency(expenseBalance);
+
+      } catch (err) {
+        console.error('Error fetching cash balance sheet data:', err);
+        showErrorModal('Unable to load live cash ledger metrics from Google Sheet. Please check your connection.');
+      }
+    }
+
+    // Trigger on DOM ready
+    document.addEventListener('DOMContentLoaded', fetchCashBalanceData);
+  </script>
+</body>
+</html>
