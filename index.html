@@ -32,10 +32,8 @@
               card: '#0F172A',
               cardLight: '#1E293B',
               accent: '#38BDF8',
-              accentHover: '#0284C7',
               emerald: '#10B981',
-              rose: '#F43F5E',
-              gold: '#F59E0B'
+              rose: '#F43F5E'
             }
           }
         }
@@ -52,7 +50,6 @@
       overflow-x: hidden;
     }
 
-    /* Glassmorphism effects */
     .glass-nav {
       background: rgba(7, 10, 17, 0.85);
       backdrop-filter: blur(12px);
@@ -71,23 +68,22 @@
 
     .glass-card:hover {
       border-color: rgba(56, 189, 248, 0.25);
-      box-shadow: 0 25px 50px -12px rgba(56, 189, 248, 0.1);
       transform: translateY(-2px);
     }
 
     .glow-bg {
       position: absolute;
-      width: 400px;
-      height: 400px;
+      width: 450px;
+      height: 450px;
       background: radial-gradient(circle, rgba(56, 189, 248, 0.12) 0%, rgba(0, 0, 0, 0) 70%);
-      top: -100px;
+      top: -120px;
       left: 50%;
       transform: translateX(-50%);
       z-index: 0;
       pointer-events: none;
     }
 
-    /* Skeleton Loading Animation */
+    /* Skeleton Loader */
     .skeleton {
       background: linear-gradient(90deg, #1e293b 25%, #334155 50%, #1e293b 75%);
       background-size: 200% 100%;
@@ -104,11 +100,11 @@
 </head>
 <body class="min-h-screen flex flex-col justify-between relative selection:bg-sky-500 selection:text-white">
 
-  <!-- Ambient Glow Effect -->
+  <!-- Ambient Glow Background -->
   <div class="glow-bg"></div>
 
   <!-- HEADER SECTION (Fixed on Top) -->
-  <header class="fixed top-0 left-0 right-0 z-50 glass-nav">
+  <header class="fixed top-0 left-0 right-0 z-40 glass-nav">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
       <!-- Top Left: Typography -->
       <div class="flex items-center space-x-3">
@@ -122,12 +118,12 @@
         </div>
       </div>
 
-      <!-- Top Right: Refresh Button -->
+      <!-- Top Right: Refresh Hyperlink Button -->
       <div>
-        <a href="#" onclick="window.location.reload(); return false;" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-slate-800/80 hover:bg-slate-700 text-sky-400 hover:text-sky-300 text-sm font-semibold border border-slate-700/60 transition-all shadow-sm">
+        <button onclick="window.location.reload();" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-slate-800/90 hover:bg-slate-700 text-sky-400 hover:text-sky-300 text-sm font-semibold border border-slate-700/60 transition-all shadow-sm cursor-pointer">
           <i class="fa-solid fa-arrows-rotate text-xs"></i>
           <span>Refresh</span>
-        </a>
+        </button>
       </div>
     </div>
   </header>
@@ -135,23 +131,23 @@
   <!-- MAIN CONTENT CONTAINER -->
   <main class="pt-28 pb-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full space-y-8 z-10">
 
-    <!-- SECTION 1: Total Balance (Full Wide Hero Size) -->
+    <!-- SECTION 1: Total Balance (Full Wide Hero Display) -->
     <section id="section-total-balance" class="w-full">
       <div class="glass-card rounded-2xl p-6 sm:p-10 relative overflow-hidden">
         <div class="flex flex-col md:flex-row md:items-center justify-between gap-6">
           <div class="space-y-2">
             <div class="flex items-center gap-2 text-slate-400 text-xs sm:text-sm font-semibold tracking-wider uppercase">
-              <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-              Portfolio Valuation
+              <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
+              Live Google Sheet Ledger
             </div>
             <h2 class="text-slate-400 font-medium text-base sm:text-lg m-0">Total Net Balance</h2>
             <div class="text-3xl sm:text-5xl lg:text-6xl font-extrabold text-white tracking-tight flex items-center gap-3">
-              <span id="total-balance" class="text-transparent bg-clip-text bg-gradient-to-r from-white via-slate-100 to-slate-300">
-                <span class="skeleton w-48 h-12"></span>
+              <span id="total-balance">
+                <span class="skeleton w-52 h-12"></span>
               </span>
             </div>
           </div>
-          <div class="flex items-center gap-3 bg-slate-900/60 p-4 rounded-xl border border-slate-800 self-start md:self-auto">
+          <div class="flex items-center gap-3 bg-slate-900/80 p-4 rounded-xl border border-slate-800 self-start md:self-auto">
             <div class="w-12 h-12 rounded-lg bg-sky-500/10 text-sky-400 flex items-center justify-center text-xl">
               <i class="fa-solid fa-vault"></i>
             </div>
@@ -186,7 +182,7 @@
         </div>
 
         <div class="pt-2 border-t border-slate-800/80 flex items-center justify-between">
-          <span class="text-xs text-slate-400">Liquid Capital</span>
+          <span class="text-xs text-slate-400">Liquid Reserve</span>
           <a href="cash_balance.html" class="inline-flex items-center gap-1.5 text-xs font-semibold text-sky-400 hover:text-sky-300 transition-colors">
             Details <i class="fa-solid fa-arrow-right text-[10px]"></i>
           </a>
@@ -219,49 +215,49 @@
     </section>
 
 
-    <!-- SECTION 3: Action Buttons -->
+    <!-- SECTION 3: Form Action Hyperlink Buttons -->
     <section id="section-actions">
       <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
         <!-- Button 1: Invest / Withdraw -->
-        <a href="https://forms.gle/21kxHZnRAFKSNto5A" target="_blank" rel="noopener noreferrer" 
-           class="glass-card group p-5 rounded-xl flex items-center justify-between hover:bg-slate-800/90 text-white transition-all">
+        <a id="btn-invest-withdraw" href="https://forms.gle/21kxHZnRAFKSNto5A" target="_blank" rel="noopener noreferrer" 
+           class="glass-card group p-5 rounded-xl flex items-center justify-between hover:bg-slate-800/90 text-white transition-all cursor-pointer">
           <div class="flex items-center gap-3">
             <div class="w-10 h-10 rounded-lg bg-sky-500/10 text-sky-400 flex items-center justify-center group-hover:scale-110 transition-transform">
               <i class="fa-solid fa-right-left"></i>
             </div>
             <div>
               <p class="font-semibold text-sm sm:text-base m-0 text-slate-100">Invest / Withdraw</p>
-              <p class="text-xs text-slate-400 m-0">Fund management</p>
+              <p class="text-xs text-slate-400 m-0">Open Google Form</p>
             </div>
           </div>
           <i class="fa-solid fa-arrow-up-right-from-square text-xs text-slate-500 group-hover:text-sky-400 transition-colors"></i>
         </a>
 
         <!-- Button 2: Buy -->
-        <a href="https://forms.gle/MU4t861Ski8LvL4g7" target="_blank" rel="noopener noreferrer" 
-           class="glass-card group p-5 rounded-xl flex items-center justify-between hover:bg-emerald-950/30 border-emerald-500/20 text-white transition-all">
+        <a id="btn-buy" href="https://forms.gle/MU4t861Ski8LvL4g7" target="_blank" rel="noopener noreferrer" 
+           class="glass-card group p-5 rounded-xl flex items-center justify-between hover:bg-emerald-950/30 border-emerald-500/20 text-white transition-all cursor-pointer">
           <div class="flex items-center gap-3">
             <div class="w-10 h-10 rounded-lg bg-emerald-500/10 text-emerald-400 flex items-center justify-center group-hover:scale-110 transition-transform">
               <i class="fa-solid fa-cart-plus"></i>
             </div>
             <div>
               <p class="font-semibold text-sm sm:text-base m-0 text-slate-100">Buy Shares</p>
-              <p class="text-xs text-slate-400 m-0">Place buy order</p>
+              <p class="text-xs text-slate-400 m-0">Open Google Form</p>
             </div>
           </div>
           <i class="fa-solid fa-arrow-up-right-from-square text-xs text-slate-500 group-hover:text-emerald-400 transition-colors"></i>
         </a>
 
         <!-- Button 3: Sell -->
-        <a href="https://forms.gle/as3Rugg1cFWEU7zAA" target="_blank" rel="noopener noreferrer" 
-           class="glass-card group p-5 rounded-xl flex items-center justify-between hover:bg-rose-950/30 border-rose-500/20 text-white transition-all">
+        <a id="btn-sell" href="https://forms.gle/as3Rugg1cFWEU7zAA" target="_blank" rel="noopener noreferrer" 
+           class="glass-card group p-5 rounded-xl flex items-center justify-between hover:bg-rose-950/30 border-rose-500/20 text-white transition-all cursor-pointer">
           <div class="flex items-center gap-3">
             <div class="w-10 h-10 rounded-lg bg-rose-500/10 text-rose-400 flex items-center justify-center group-hover:scale-110 transition-transform">
               <i class="fa-solid fa-tags"></i>
             </div>
             <div>
               <p class="font-semibold text-sm sm:text-base m-0 text-slate-100">Sell Shares</p>
-              <p class="text-xs text-slate-400 m-0">Place sell order</p>
+              <p class="text-xs text-slate-400 m-0">Open Google Form</p>
             </div>
           </div>
           <i class="fa-solid fa-arrow-up-right-from-square text-xs text-slate-500 group-hover:text-rose-400 transition-colors"></i>
@@ -270,7 +266,7 @@
     </section>
 
 
-    <!-- SECTION 4: Performance Metrics (Return % & Income Balance) -->
+    <!-- SECTION 4: Return Percentage & Income Balance -->
     <section id="section-metrics" class="grid grid-cols-1 md:grid-cols-2 gap-6">
       <!-- Return Percentage -->
       <div class="glass-card rounded-2xl p-6 space-y-4">
@@ -289,7 +285,7 @@
         </div>
 
         <p class="text-xs text-slate-400 m-0 border-t border-slate-800/80 pt-3">
-          Overall return on invested capital
+          Overall return on invested capital (Cell K2)
         </p>
       </div>
 
@@ -310,13 +306,13 @@
         </div>
 
         <p class="text-xs text-slate-400 m-0 border-t border-slate-800/80 pt-3">
-          Net realized and unrealized gains
+          Net realized and unrealized gains (Cell J2)
         </p>
       </div>
     </section>
 
 
-    <!-- SECTION 5: Transaction History Button -->
+    <!-- SECTION 5: Transaction History -->
     <section id="section-transactions">
       <div class="glass-card rounded-2xl p-6 sm:p-8 flex flex-col sm:flex-row items-center justify-between gap-6 border-sky-500/20">
         <div class="flex items-center gap-4">
@@ -338,11 +334,34 @@
   </main>
 
 
+  <!-- ERROR MODAL OVERLAY (Triggers on Fetch Failure) -->
+  <div id="error-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-md hidden p-4">
+    <div class="glass-card max-w-md w-full p-6 sm:p-8 rounded-2xl border-rose-500/40 text-center space-y-5 shadow-2xl animate-fade-in">
+      <div class="w-16 h-16 rounded-2xl bg-rose-500/10 text-rose-500 border border-rose-500/20 mx-auto flex items-center justify-center text-3xl">
+        <i class="fa-solid fa-triangle-exclamation"></i>
+      </div>
+      
+      <div class="space-y-2">
+        <h3 class="text-xl font-bold text-white m-0">Data Sync Failed</h3>
+        <p id="error-message-text" class="text-sm text-slate-300 leading-relaxed m-0">
+          Unable to fetch live data from Google Sheet. Please check your internet connection or sheet permissions.
+        </p>
+      </div>
+
+      <div class="pt-2">
+        <button onclick="window.location.reload();" 
+                class="w-full py-3 rounded-xl bg-rose-600 hover:bg-rose-500 text-white font-bold text-sm tracking-wide shadow-lg shadow-rose-600/30 transition-all cursor-pointer">
+          Okay (Refresh Page)
+        </button>
+      </div>
+    </div>
+  </div>
+
+
   <!-- FOOTER SECTION -->
   <footer class="border-t border-slate-800/80 bg-slate-950/80 text-slate-400 pt-12 pb-8 px-4 sm:px-6 lg:px-8 z-10">
     <div class="max-w-7xl mx-auto space-y-8">
       <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
-        <!-- Brand Info -->
         <div class="md:col-span-2 space-y-3">
           <div class="flex items-center space-x-2">
             <div class="w-8 h-8 rounded-lg bg-sky-500 text-white font-bold flex items-center justify-center text-sm">
@@ -355,7 +374,6 @@
           </p>
         </div>
 
-        <!-- Quick Links -->
         <div class="space-y-2">
           <h5 class="text-xs font-semibold text-white uppercase tracking-wider">Quick Navigation</h5>
           <ul class="space-y-1.5 text-xs p-0 list-none">
@@ -365,14 +383,13 @@
           </ul>
         </div>
 
-        <!-- Status & Sync Info -->
         <div class="space-y-2">
           <h5 class="text-xs font-semibold text-white uppercase tracking-wider">System Status</h5>
           <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg bg-slate-900 border border-slate-800 text-xs">
             <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
             <span class="text-slate-300">Google Sheet Sync: <strong class="text-emerald-400">Live</strong></span>
           </div>
-          <p class="text-[11px] text-slate-500 m-0">Updated in real-time from central ledger.</p>
+          <p class="text-[11px] text-slate-500 m-0">Live data connection active.</p>
         </div>
       </div>
 
@@ -384,28 +401,24 @@
   </footer>
 
 
-  <!-- JAVASCRIPT: Google Sheet Fetcher & UI Updater -->
+  <!-- JAVASCRIPT: Google Sheet Live Fetcher & Dynamic Error Alert -->
   <script>
-    // Set current copyright year
     document.getElementById('year').textContent = new Date().getFullYear();
 
-    // Google Sheet Config
     const SPREADSHEET_ID = '1xeMJjLxS79lqQEsnvfLycx2voNv7rToF0wm6J3S4_Fs';
-    const SHEET_NAME = 'balance';
 
-    // Helper: Currency Formatter
+    // Formatters
     function formatCurrency(val) {
       if (val === null || val === undefined || isNaN(val)) return '৳ 0.00';
       const num = parseFloat(val);
       return '৳ ' + num.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
     }
 
-    // Helper: Percentage Formatter
     function formatPercentage(val) {
       if (val === null || val === undefined || isNaN(val)) return '0.00%';
       let num = parseFloat(val);
       
-      // If the value is a decimal like 0.00592, convert to percentage format if needed
+      // If decimal form (e.g. 0.0059), scale to percentage
       if (Math.abs(num) < 1 && num !== 0) {
         num = num * 100;
       }
@@ -414,84 +427,118 @@
       return `${sign}${num.toFixed(2)}%`;
     }
 
-    // Main Fetch Function using Google Visualization API (gviz) JSON Endpoint
-    async function loadSheetData() {
-      const gvizUrl = `https://docs.google.com/spreadsheets/d/${SPREADSHEET_ID}/gviz/tq?tqx=out:json&sheet=${SHEET_NAME}`;
+    // Trigger Error Modal
+    function showErrorModal(message) {
+      if (message) {
+        document.getElementById('error-message-text').textContent = message;
+      }
+      document.getElementById('error-modal').classList.remove('hidden');
+    }
+
+    // Fetch Live Sheet Data
+    async function fetchLiveSheetData() {
+      const balanceUrl = `https://docs.google.com/spreadsheets/d/${SPREADSHEET_ID}/gviz/tq?tqx=out:json&sheet=balance`;
+      const linksUrl = `https://docs.google.com/spreadsheets/d/${SPREADSHEET_ID}/gviz/tq?tqx=out:json&sheet=links`;
 
       try {
-        const response = await fetch(gvizUrl);
-        const text = await response.text();
-        
-        // Extract JSON string from gviz response callback wrapper
-        const jsonMatch = text.match(/google\.visualization\.Query\.setResponse\(([\s\S]*)\);/);
-        
-        if (!jsonMatch || !jsonMatch[1]) {
-          throw new Error('Invalid JSON format from Google Sheet');
+        // Fetch Balance Sheet Data
+        const response = await fetch(balanceUrl);
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
         }
 
-        const data = JSON.parse(jsonMatch[1]);
-        const rowData = data.table.rows[0].c;
+        const text = await response.text();
+        
+        // Extract clean JSON from Google gviz response wrapper
+        const jsonStart = text.indexOf('{');
+        const jsonEnd = text.lastIndexOf('}');
+        if (jsonStart === -1 || jsonEnd === -1) {
+          throw new Error('Failed to parse response structure from Google Sheet.');
+        }
 
-        // Map Cells according to index:
+        const data = JSON.parse(text.substring(jsonStart, jsonEnd + 1));
+        
+        if (!data.table || !data.table.rows || data.table.rows.length === 0) {
+          throw new Error('No records found in "balance" sheet.');
+        }
+
+        const row = data.table.rows[0].c;
+
+        // Safe extraction
+        const getVal = (cell) => (cell && (cell.v !== null && cell.v !== undefined) ? cell.v : (cell && cell.f ? cell.f : 0));
+
+        // Mapping:
         // A2 -> index 0 (Total Balance)
         // B2 -> index 1 (Cash Balance)
         // C2 -> index 2 (Shares Balance)
         // J2 -> index 9 (Income Balance)
         // K2 -> index 10 (Return Percentage)
+        const totalBalance = getVal(row[0]);
+        const cashBalance = getVal(row[1]);
+        const sharesBalance = getVal(row[2]);
+        const incomeBalance = getVal(row[9]);
+        const returnPercentage = getVal(row[10]);
 
-        const totalBalance = rowData[0] ? (rowData[0].v !== null ? rowData[0].v : rowData[0].f) : 0;
-        const cashBalance = rowData[1] ? (rowData[1].v !== null ? rowData[1].v : rowData[1].f) : 0;
-        const sharesBalance = rowData[2] ? (rowData[2].v !== null ? rowData[2].v : rowData[2].f) : 0;
-        const incomeBalance = rowData[9] ? (rowData[9].v !== null ? rowData[9].v : rowData[9].f) : 0;
-        const returnVal = rowData[10] ? (rowData[10].v !== null ? rowData[10].v : rowData[10].f) : 0;
-
-        // Update UI
+        // Render Values
         document.getElementById('total-balance').textContent = formatCurrency(totalBalance);
         document.getElementById('cash-balance').textContent = formatCurrency(cashBalance);
         document.getElementById('shares-balance').textContent = formatCurrency(sharesBalance);
-        
-        // Income Balance Element & Color
+
+        // Render Income Balance
         const incomeElem = document.getElementById('income-balance');
         const numIncome = parseFloat(incomeBalance);
         incomeElem.textContent = formatCurrency(numIncome);
-        if (numIncome > 0) {
-          incomeElem.className = 'text-emerald-400';
-        } else if (numIncome < 0) {
-          incomeElem.className = 'text-rose-400';
-        } else {
-          incomeElem.className = 'text-slate-200';
-        }
+        incomeElem.className = numIncome > 0 ? 'text-emerald-400' : (numIncome < 0 ? 'text-rose-400' : 'text-slate-200');
 
-        // Return Percentage Element & Color
+        // Render Return Percentage
         const returnElem = document.getElementById('return-percentage');
-        const numReturn = parseFloat(returnVal);
-        returnElem.textContent = formatPercentage(numReturn);
+        const numReturn = parseFloat(returnPercentage);
+        const formattedReturn = formatPercentage(numReturn);
+        
         if (numReturn > 0) {
           returnElem.className = 'text-emerald-400 flex items-center gap-1.5';
-          returnElem.innerHTML = `<i class="fa-solid fa-circle-arrow-up text-lg"></i> ${formatPercentage(numReturn)}`;
+          returnElem.innerHTML = `<i class="fa-solid fa-circle-arrow-up text-lg"></i> ${formattedReturn}`;
         } else if (numReturn < 0) {
           returnElem.className = 'text-rose-400 flex items-center gap-1.5';
-          returnElem.innerHTML = `<i class="fa-solid fa-circle-arrow-down text-lg"></i> ${formatPercentage(numReturn)}`;
+          returnElem.innerHTML = `<i class="fa-solid fa-circle-arrow-down text-lg"></i> ${formattedReturn}`;
         } else {
           returnElem.className = 'text-slate-200';
+          returnElem.textContent = formattedReturn;
         }
 
-      } catch (error) {
-        console.error('Error fetching data from Google Sheet:', error);
-        
-        // Display Fallback static data if network fails
-        document.getElementById('total-balance').textContent = '৳ 100,592.09';
-        document.getElementById('cash-balance').textContent = '৳ 20,782.31';
-        document.getElementById('shares-balance').textContent = '৳ 79,809.79';
-        document.getElementById('income-balance').textContent = '৳ 592.09';
-        document.getElementById('income-balance').className = 'text-emerald-400';
-        document.getElementById('return-percentage').innerHTML = '<i class="fa-solid fa-circle-arrow-up text-lg"></i> +0.59%';
-        document.getElementById('return-percentage').className = 'text-emerald-400 flex items-center gap-1.5';
+        // Fetch Dynamic Form Links from "links" sheet tab
+        try {
+          const linksRes = await fetch(linksUrl);
+          if (linksRes.ok) {
+            const linksText = await linksRes.text();
+            const lStart = linksText.indexOf('{');
+            const lEnd = linksText.lastIndexOf('}');
+            if (lStart !== -1 && lEnd !== -1) {
+              const linksData = JSON.parse(linksText.substring(lStart, lEnd + 1));
+              const lRows = linksData.table.rows;
+              lRows.forEach(r => {
+                if (r.c && r.c[1] && r.c[2]) {
+                  const type = String(r.c[1].v).toLowerCase();
+                  const url = r.c[2].v;
+                  if (type.includes('buy') && url) document.getElementById('btn-buy').href = url;
+                  if (type.includes('sell') && url) document.getElementById('btn-sell').href = url;
+                  if (type.includes('invest') && url) document.getElementById('btn-invest-withdraw').href = url;
+                }
+              });
+            }
+          }
+        } catch (linkErr) {
+          console.warn('Could not sync links tab, using default form URLs:', linkErr);
+        }
+
+      } catch (err) {
+        console.error('Error fetching live data:', err);
+        showErrorModal('Error fetching live market data from Google Sheet. Please verify your internet connection.');
       }
     }
 
-    // Trigger data fetch on page load
-    document.addEventListener('DOMContentLoaded', loadSheetData);
+    // Execute on Page Load
+    document.addEventListener('DOMContentLoaded', fetchLiveSheetData);
   </script>
 </body>
 </html>
